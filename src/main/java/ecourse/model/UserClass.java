@@ -42,7 +42,7 @@ public class UserClass {
     private Role role;
     @Transient
     private MultipartFile imageFile;
-    @Column(name = "user_image_url")
+    @Column(name = "user_image_url", columnDefinition = "TEXT")
     private String userImageUrl;
     @Column(name = "fullname")
     private String fullname;
