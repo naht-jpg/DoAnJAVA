@@ -50,6 +50,11 @@ public class PasswordController {
                     model.addAttribute("errorMessage", "Mật khẩu mới không được giống mật khẩu hiện tại.");
                     return "home/changePassword";
                 }
+                // ===== PASSWORD POLICY =====
+                if (!userService.isPasswordStrong(newPassword)) {
+                    model.addAttribute("errorMessage", "Mật khẩu phải có ít nhất 8 ký tự, bao gồm chữ hoa, chữ thường, số và ký tự đặc biệt (@#$%^&+=!)");
+                    return "home/changePassword";
+                }
                 if (newPassword.equals(confirmPassword)) {
                     user.setPassword(passwordEncoder.encode(newPassword));
                     userService.save(user);

@@ -11,6 +11,7 @@ import ecourse.repository.CategoriesRepository;
 import ecourse.repository.CourseRepository;
 import ecourse.repository.TeacherRepository;
 import ecourse.service.UserInterface;
+import ecourse.service.UserService;
 import jakarta.servlet.http.HttpSession;
 
 import org.springframework.web.bind.annotation.PostMapping;
@@ -26,6 +27,8 @@ public class LayoutController {
     private TeacherRepository teacherRepository;
     @Autowired 
     private CategoriesRepository categoryRepository;
+    @Autowired
+    private UserService userServiceImpl;
     @GetMapping("/home/course")
   
     public String course(Model model) {
@@ -72,14 +75,21 @@ public class LayoutController {
     @PostMapping("/createUser")
     public String createUser(@ModelAttribute UserClass user, HttpSession session) {
 
+        // ===== PASSWORD POLICY =====
+        if (!userServiceImpl.isPasswordStrong(user.getPassword())) {
+            session.setAttribute("msg", "Mật khẩu phải có ít nhất 8 ký tự, bao gồm chữ hoa, chữ thường, số và ký tự đặc biệt (@#$%^&+=!)");
+            return "redirect:/home/register?error";
+        }
+
         boolean f = userService.checkEmail(user.getEmail());
         if (f) {
             session.setAttribute("msg", "Email đã tồn tại");
+            return "redirect:/home/register?error";
         } else {
             UserClass userClass = userService.createUser(user);
             session.setAttribute("msg", userClass != null ? "Đăng ký thành công" : "Đăng ký thất bại");
         }
-        return "redirect:/home/register";
+        return "redirect:/home/register?success";
     }
 
     @PostMapping("/clearSessionMsg")

@@ -46,6 +46,15 @@ public class UserClass {
     private String userImageUrl;
     @Column(name = "fullname")
     private String fullname;
+
+    @Column(name = "failed_attempt")
+    private int failedAttempt;
+
+    @Column(name = "account_non_locked")
+    private boolean accountNonLocked = true;
+
+    @Column(name = "lock_time")
+    private java.util.Date lockTime;
     // nối phiếu học
     @OneToMany(mappedBy = "clazz")
     private List<Enrollments> enroll;

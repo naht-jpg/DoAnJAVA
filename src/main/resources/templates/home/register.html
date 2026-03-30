@@ -35,11 +35,11 @@
                     </div>
                     <div class="col-lg-7">
                         <div class="p-5">
-                            <div th:if = "${param.error}" class="alert alert-danger">
-                                Email đã tồn tại!
+                            <div th:if="${param.error}" class="alert alert-danger">
+                                <span th:text="${session.msg}">Lỗi đăng ký</span>
                             </div>
-                            <div th:if ="${param.success}" class="alert alert-success">
-                                Đăng ký thành công!
+                            <div th:if="${param.success}" class="alert alert-success">
+                                <span th:text="${session.msg}">Đăng ký thành công!</span>
                             </div>
                             <div class="text-center">
                                 <h1 class="h4 text-gray-900 mb-4">Tạo tài khoản</h1>
