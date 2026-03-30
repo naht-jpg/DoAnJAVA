@@ -59,6 +59,7 @@ public class SecutiryConfig {
         )
         // ===== REMEMBER ME =====
         .rememberMe((rm) -> rm
+                .userDetailsService(getUserDetailsServices())
                 .key("ecourse-remember-me-secret")
                 .tokenValiditySeconds(86400) // 1 ngay
                 .rememberMeParameter("remember-me")
